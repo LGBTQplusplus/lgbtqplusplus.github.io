@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LGBTQ++ | Benchmarking Chaos Since 2026</title>
+<meta name="description" content="A meme org that benchmarks C++ programs. Gay, but make it O(n log n).">
+<style>
+  :root {
+    --red: #e40303; --orange: #ff8c00; --yellow: #ffed00;
+    --green: #008026; --blue: #004dff; --purple: #750787;
+    --pink: #ff69b4; --bg: #12001f; --ink: #fff7fb;
+    --rainbow: linear-gradient(90deg, var(--red), var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--red));
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 20% 10%, #3b0a5c 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, #0a2a6b 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    font-family: "Comic Sans MS", "Comic Neue", "Chalkboard SE", cursive, sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  a { color: var(--yellow); }
+
+  /* top rainbow bars */
+  .bar { height: 12px; background: var(--rainbow); background-size: 200% 100%; animation: slide 4s linear infinite; }
+  @keyframes slide { to { background-position: 200% 0; } }
+
+  /* scrolling ticker */
+  .ticker { overflow: hidden; white-space: nowrap; background: #000; border-block: 3px dashed var(--pink); padding: 6px 0; }
+  .ticker span { display: inline-block; padding-left: 100%; animation: scroll 22s linear infinite; font-weight: bold; color: var(--yellow); }
+  @keyframes scroll { to { transform: translateX(-100%); } }
+
+  header { text-align: center; padding: 40px 16px 10px; }
+  h1 {
+    font-size: clamp(3rem, 12vw, 8rem);
+    margin: 0;
+    line-height: 1;
+    background: var(--rainbow);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    animation: slide 3s linear infinite, wobble 2.5s ease-in-out infinite;
+    text-shadow: 0 0 40px rgba(255,255,255,.15);
+    display: inline-block;
+  }
+  @keyframes wobble { 0%,100% { transform: rotate(-2deg) scale(1); } 50% { transform: rotate(2deg) scale(1.04); } }
+  .tagline { font-size: clamp(1rem, 3vw, 1.6rem); margin: 10px 0 0; }
+  .tagline em { color: var(--pink); }
+
+  main { max-width: 980px; margin: 0 auto; padding: 10px 16px 60px; }
+  section { margin: 36px 0; }
+  h2 {
+    font-size: 2rem; margin: 0 0 12px;
+    display: inline-block; padding: 2px 14px;
+    background: var(--pink); color: #12001f;
+    transform: rotate(-1.5deg);
+    box-shadow: 5px 5px 0 var(--purple);
+  }
+  .card {
+    background: rgba(255,255,255,.07);
+    border: 3px solid transparent;
+    border-radius: 18px;
+    padding: 18px 20px;
+    background-clip: padding-box;
+    position: relative;
+  }
+  .card::before {
+    content: ""; position: absolute; inset: -3px; z-index: -1; border-radius: 21px;
+    background: var(--rainbow); background-size: 200% 100%; animation: slide 6s linear infinite;
+  }
+
+  /* cat zone */
+  .catzone { display: grid; gap: 18px; grid-template-columns: 1fr; align-items: center; text-align: center; }
+  @media (min-width: 760px) { .catzone { grid-template-columns: 1.1fr 1fr; text-align: left; } }
+  .catframe {
+    background: #000; border: 6px ridge var(--yellow); border-radius: 10px; padding: 8px;
+    min-height: 240px; display: grid; place-items: center; transform: rotate(1.5deg);
+    transition: transform .2s;
+  }
+  .catframe:hover { transform: rotate(-1deg) scale(1.02); }
+  .catframe img { max-width: 100%; max-height: 420px; display: block; cursor: pointer; border-radius: 4px; }
+  pre.ascii { margin: 0; color: var(--pink); font-size: 1.1rem; line-height: 1.1; }
+  button, .btn {
+    font: inherit; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block;
+    padding: 10px 18px; margin: 6px 6px 0 0;
+    background: var(--yellow); color: #12001f;
+    border: 3px solid #12001f; border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--pink);
+    transition: transform .1s, box-shadow .1s;
+  }
+  button:hover, .btn:hover { transform: translate(-2px,-2px) rotate(-1deg); box-shadow: 7px 7px 0 var(--pink); }
+  button:active, .btn:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 var(--pink); }
+
+  /* leaderboard */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 2px dotted rgba(255,255,255,.3); }
+  th { color: var(--yellow); }
+  td.pts { font-variant-numeric: tabular-nums; font-weight: bold; text-align: right; }
+  th.pts { text-align: right; }
+  tr:nth-child(1) td:first-child::after { content: " 🥇"; }
+  tr:nth-child(2) td:first-child::after { content: " 🥈"; }
+  tr:nth-child(3) td:first-child::after { content: " 🥉"; }
+  .fine { font-size: .8rem; opacity: .7; margin-top: 8px; }
+
+  /* scoring */
+  .score { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .score div { background: rgba(0,0,0,.35); border-radius: 14px; padding: 12px; text-align: center; }
+  .score b { display: block; font-size: 2rem; color: var(--yellow); }
+
+  ol.rules li { margin: 6px 0; }
+  ol.rules li::marker { color: var(--pink); font-weight: bold; }
+
+  /* floating decor */
+  .float { position: fixed; font-size: 2rem; pointer-events: none; z-index: 5; animation: floaty 7s ease-in-out infinite; opacity: .85; }
+  @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-30px) rotate(12deg); } }
+
+  footer { text-align: center; padding: 30px 16px 50px; font-size: .9rem; }
+  .counter { display: inline-block; background: #000; color: #0f0; font-family: monospace; padding: 4px 10px; border: 2px inset #888; letter-spacing: 3px; }
+  .confetti { position: fixed; top: -2rem; font-size: 1.8rem; pointer-events: none; z-index: 99; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar"></div>
+<div class="ticker"><span>🌈 BREAKING: local programmer discovers O(n²) is "fine for small n" 🌈 &nbsp;•&nbsp; 🐱 cat has been informed of your segfault 🐱 &nbsp;•&nbsp; ⚠️ no programs were harmed in the making of this benchmark ⚠️ &nbsp;•&nbsp; 🏆 Makefile says "timeout" but we believe in you 🏆 &nbsp;•&nbsp; 💅 slay the test cases 💅</span></div>
+
+<span class="float" style="left:2%; top:25%;">🐱</span>
+<span class="float" style="right:3%; top:45%; animation-delay:-2s;">🌈</span>
+<span class="float" style="left:4%; top:70%; animation-delay:-4s;">💜</span>
+<span class="float" style="right:5%; top:80%; animation-delay:-1s;">✨</span>
+
+<header>
+  <h1>LGBTQ++</h1>
+  <p class="tagline">Gay, but make it <em>O(n log n)</em>. &nbsp;🏳️‍🌈 Benchmarking C++ since 2026.</p>
+</header>
+
+<main>
+
+  <section>
+    <h2>Meet the mascot</h2>
+    <div class="card">
+      <div class="catzone">
+        <div class="catframe" id="catframe">
+          <img id="cat" alt="A random meme cat" title="click me for a new cat">
+        </div>
+        <div>
+          <p><b>This cat has reviewed your code.</b><br>
+          It is not impressed. It knocked your <code>std::vector</code> off the table on purpose.</p>
+          <p>Click the cat (or the button) for a fresh verdict.</p>
+          <button id="newcat">🐈 New cat verdict</button>
+          <button id="party">🎉 Party</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What even is this?</h2>
+    <div class="card">
+      <p>We are a very serious organization (we are not) with one goal: to find out whose C++ solution is the fastest.
+      Everyone who solves the task throws their program in the ring, and our
+      <code>arena.sh</code> turns the test run into a <b>live game show</b> with a leaderboard, commentary and a podium.</p>
+      <p>Correct answers earn points. Speed earns <i>more</i> points. A streak earns bragging rights.
+      Wrong answers earn the cat's disappointment.</p>
+      <a class="btn" href="https://github.com/LGBTQplusplus" target="_blank" rel="noopener">🌈 Visit the GitHub org</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>How scoring works</h2>
+    <div class="card">
+      <div class="score">
+        <div><b>0</b>wrong, timeout or crash. The cat sighs.</div>
+        <div><b>500</b>correct. Congrats, you can code.</div>
+        <div><b>+500</b>speed bonus. Be quick or be lunch.</div>
+        <div><b>+250</b>max streak bonus. Don't blink.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Hall of Fame</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Contestant</th><th>Vibe</th><th class="pts">Points</th></tr></thead>
+        <tbody>
+          <tr><td>definitely_not_O(n!).cpp</td><td>suspiciously fast</td><td class="pts">9999</td></tr>
+          <tr><td>copied_from_stackoverflow.cpp</td><td>"it works, don't touch it"</td><td class="pts">8420</td></tr>
+          <tr><td>vector&lt;bool&gt;_regrets.cpp</td><td>space-efficient, sanity-inefficient</td><td class="pts">7001</td></tr>
+          <tr><td>segfault_sally.cpp</td><td>lives fast, crashes faster</td><td class="pts">69</td></tr>
+          <tr><td>cout_debugging_enjoyer.cpp</td><td>forgot to remove the prints</td><td class="pts">0</td></tr>
+        </tbody>
+      </table>
+      <p class="fine">* Totally real results. Mostly. (Placeholder data, the real leaderboard lives in the arena.)</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Rules™</h2>
+    <div class="card">
+      <ol class="rules">
+        <li>Do not delete or alter other people's programs.</li>
+        <li>Only edit your own program.</li>
+        <li>Do not change the tests or <code>arena.sh</code> without agreeing with the others.</li>
+        <li>Do not push anything that breaks the repo for everyone else.</li>
+        <li>Play fair. It's for fun and learning (and mild cat-based intimidation).</li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>You are visitor number <span class="counter" id="counter">000000</span></p>
+  <p>Best viewed in Netscape Navigator 4.0 at 800×600 🖥️</p>
+  <p>Made with 💜, caffeine and zero unit tests. <small>(psst: try the Konami code)</small></p>
+</footer>
+<div class="bar"></div>
+
+<script>
+(function () {
+  var captions = [
+    "your code is mid", "segfault again?", "have you tried O(1)?",
+    "works on my machine", "nice loop. shame about the bug", "i fear no timeout",
+    "make test? make me", "cout << meow", "compile error. skill issue", "ship it"
+  ];
+  var cat = document.getElementById("cat");
+  var frame = document.getElementById("catframe");
+  var fallback = "      /\\_/\\\n     ( o.o )\n      > ^ <\n   (segfault: cat not found)";
+
+  function newCat() {
+    var text = encodeURIComponent(captions[Math.floor(Math.random() * captions.length)]);
+    cat.style.display = "";
+    var old = frame.querySelector("pre");
+    if (old) old.remove();
+    cat.src = "https://cataas.com/cat/says/" + text + "?fontSize=42&fontColor=white&t=" + Date.now();
+  }
+  cat.addEventListener("error", function () {
+    cat.style.display = "none";
+    if (!frame.querySelector("pre")) {
+      var pre = document.createElement("pre");
+      pre.className = "ascii";
+      pre.textContent = fallback;
+      frame.appendChild(pre);
+    }
+  });
+  cat.addEventListener("click", newCat);
+  document.getElementById("newcat").addEventListener("click", newCat);
+  newCat();
+
+  /* confetti */
+  var bits = ["🌈", "🐱", "💜", "✨", "🏳️‍🌈", "💅", "🎉", "🐈"];
+  function party() {
+    for (var i = 0; i < 40; i++) {
+      var s = document.createElement("span");
+      s.className = "confetti";
+      s.textContent = bits[Math.floor(Math.random() * bits.length)];
+      s.style.left = Math.random() * 100 + "vw";
+      s.style.animationDuration = 2 + Math.random() * 3 + "s";
+      s.style.animationDelay = Math.random() * 0.8 + "s";
+      document.body.appendChild(s);
+      setTimeout(function (el) { el.remove(); }.bind(null, s), 6500);
+    }
+  }
+  document.getElementById("party").addEventListener("click", party);
+
+  /* konami code */
+  var code = [38,38,40,40,37,39,37,39,66,65], pos = 0;
+  document.addEventListener("keydown", function (e) {
+    pos = (e.keyCode === code[pos]) ? pos + 1 : 0;
+    if (pos === code.length) {
+      pos = 0; party(); party();
+      document.body.style.transform = "rotate(180deg)";
+      setTimeout(function () { document.body.style.transform = ""; }, 2500);
+    }
+  });
+
+  /* fake visitor counter */
+  var c = document.getElementById("counter");
+  var n = 1337 + Math.floor(Math.random() * 600);
+  c.textContent = String(n).padStart(6, "0");
+})();
+</script>
+</body>
+</html>
