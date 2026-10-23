@@ -239,14 +239,32 @@
   var frame = document.getElementById("catframe");
   var fallback = "      /\\_/\\\n     ( o.o )\n      > ^ <\n   (segfault: cat not found)";
 
-  function newCat() {
+  /* rare cat: your own image from the assets folder */
+  var RARE_IMAGE = "assets/rare-cat.jpg";   /* change to your file name */
+  var RARE_CHANCE = 0.08;                   /* 8% chance (0.05 to 0.10 is the sweet spot) */
+  var showingRare = false;
+
+  function loadRandomCat() {
     var text = encodeURIComponent(captions[Math.floor(Math.random() * captions.length)]);
+    showingRare = false;
+    cat.alt = "A random meme cat";
+    cat.src = "https://cataas.com/cat/says/" + text + "?fontSize=42&fontColor=white&t=" + Date.now();
+  }
+
+  function newCat() {
     cat.style.display = "";
     var old = frame.querySelector("pre");
     if (old) old.remove();
-    cat.src = "https://cataas.com/cat/says/" + text + "?fontSize=42&fontColor=white&t=" + Date.now();
+    if (Math.random() < RARE_CHANCE) {
+      showingRare = true;
+      cat.alt = "The rare cat";
+      cat.src = RARE_IMAGE;
+    } else {
+      loadRandomCat();
+    }
   }
   cat.addEventListener("error", function () {
+    if (showingRare) { loadRandomCat(); return; }   /* rare image missing: fall back to a normal cat */
     cat.style.display = "none";
     if (!frame.querySelector("pre")) {
       var pre = document.createElement("pre");
