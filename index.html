@@ -36,7 +36,7 @@
   .ticker span { display: inline-block; padding-left: 100%; animation: scroll 22s linear infinite; font-weight: bold; color: var(--yellow); }
   @keyframes scroll { to { transform: translateX(-100%); } }
 
-  header { text-align: center; padding: 40px 16px 10px; }
+  header { text-align: center; padding: 40px 16px 10px; position: relative; overflow: hidden; }
   h1 {
     font-size: clamp(3rem, 12vw, 8rem);
     margin: 0;
@@ -116,6 +116,29 @@
   ol.rules li { margin: 6px 0; }
   ol.rules li::marker { color: var(--pink); font-weight: bold; }
 
+  /* nav + tabs */
+  nav#nav { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+    padding: 10px 12px; background: #12001f; border-bottom: 3px dashed var(--pink); }
+  nav#nav a { text-decoration: none; font-weight: bold; color: #12001f; background: var(--yellow);
+    border: 3px solid #12001f; border-radius: 999px; padding: 4px 14px; box-shadow: 3px 3px 0 var(--pink);
+    transition: transform .1s; }
+  nav#nav a:hover { transform: translate(-1px,-1px) rotate(-2deg); }
+  nav#nav a.on { background: var(--pink); transform: rotate(-2deg) scale(1.06); }
+  .tab[hidden] { display: none !important; }
+  main { scroll-margin-top: 70px; }
+
+  /* events */
+  .events { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .event { display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: start;
+    background: rgba(0,0,0,.35); border-radius: 14px; padding: 12px 14px; }
+  .event .when { background: var(--yellow); color: #12001f; font-weight: bold; text-align: center;
+    border: 3px solid #12001f; border-radius: 10px; padding: 6px 4px; box-shadow: 3px 3px 0 var(--pink);
+    transform: rotate(-2deg); font-size: .9rem; line-height: 1.25; }
+  .event h3 { margin: 0 0 2px; font-size: 1.15rem; }
+  .event .where { margin: 0 0 6px; font-size: .85rem; opacity: .8; }
+  .event p { margin: 0 0 6px; }
+  @media (max-width: 520px) { .event { grid-template-columns: 1fr; } .event .when { justify-self: start; padding: 6px 12px; } }
+
   /* post wall */
   #wall-form input[type="text"], #wall-form textarea {
     width: 100%; font: inherit; color: #12001f; background: #fff7fb;
@@ -133,7 +156,7 @@
   .note .by { margin: 0; font-size: .8rem; font-weight: bold; opacity: .75; }
 
   /* floating decor */
-  .float { position: fixed; font-size: 2rem; pointer-events: none; z-index: 5; animation: floaty 7s ease-in-out infinite; opacity: .85; }
+  .float { position: absolute; font-size: 2rem; pointer-events: none; z-index: 5; animation: floaty 7s ease-in-out infinite; opacity: .85; }
   @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-30px) rotate(12deg); } }
 
   footer { text-align: center; padding: 30px 16px 50px; font-size: .9rem; }
@@ -151,18 +174,26 @@
 <div class="bar"></div>
 <div class="ticker"><span>🌈 BREAKING: local programmer discovers O(n²) is "fine for small n" 🌈 &nbsp;•&nbsp; 🐱 cat has been informed of your segfault 🐱 &nbsp;•&nbsp; ⚠️ no programs were harmed in the making of this benchmark ⚠️ &nbsp;•&nbsp; 🏆 Makefile says "timeout" but we believe in you 🏆 &nbsp;•&nbsp; 💅 slay the test cases 💅</span></div>
 
-<span class="float" style="left:2%; top:25%;">🐱</span>
-<span class="float" style="right:3%; top:45%; animation-delay:-2s;">🌈</span>
-<span class="float" style="left:4%; top:70%; animation-delay:-4s;">💜</span>
-<span class="float" style="right:5%; top:80%; animation-delay:-1s;">✨</span>
-
 <header>
+  <span class="float" style="left:2%; top:12%;">🐱</span>
+  <span class="float" style="right:3%; top:30%; animation-delay:-2s;">🌈</span>
+  <span class="float" style="left:5%; top:62%; animation-delay:-4s;">💜</span>
+  <span class="float" style="right:6%; top:68%; animation-delay:-1s;">✨</span>
   <h1>LGBTQ++</h1>
   <p class="tagline">Gay, but make it <em>O(n log n)</em>. &nbsp;🏳️‍🌈 Benchmarking C++ since 2026.</p>
 </header>
 
+<nav id="nav" aria-label="Sections">
+  <a href="#home">🏠 Home</a>
+  <a href="#arena">🏆 Arena</a>
+  <a href="#events">🗓️ Events</a>
+  <a href="#wall">📜 Printf</a>
+  <a href="#links">🔗 Links</a>
+</nav>
+
 <main>
 
+<div class="tab" id="home">
   <section>
     <h2>Meet the mascot</h2>
     <div class="card">
@@ -193,6 +224,9 @@
     </div>
   </section>
 
+</div>
+
+<div class="tab" id="arena">
   <section>
     <h2>How scoring works</h2>
     <div class="card">
@@ -235,18 +269,78 @@
     </div>
   </section>
 
+</div>
+
+<div class="tab" id="events">
   <section>
+    <h2>🗓️ Events</h2>
+    <div class="card">
+      <p>Real events, zero relation to benchmarking. Pumpkins, demons and hackers, in order of when they happen.</p>
+      <ul class="events">
+        <li class="event">
+          <div class="when">until<br>1 Nov 2026</div>
+          <div>
+            <h3>Ludwigsburg Pumpkin Festival</h3>
+            <p class="where">Ludwigsburg, Germany</p>
+            <p>The world's largest pumpkin exhibition: around 450,000 pumpkins, 600 varieties, and this year's theme is "Let's Play". Yes, they take it very seriously.</p>
+            <a href="https://travel.ludwigsburg.de/start/events+_+festivals/ludwigsburg+pumpkin+festival.html" target="_blank" rel="noopener">More info →</a>
+          </div>
+        </li>
+        <li class="event">
+          <div class="when">21 Nov<br>2026</div>
+          <div>
+            <h3>Weirdo Fest</h3>
+            <p class="where">Skatecafe, Amsterdam, Netherlands</p>
+            <p>A festival for people who love "weird" music and personalities, with a stacked lineup of eccentric acts and kooky art. 21+ only.</p>
+            <a href="https://www.festivalinfo.nl/festival/37007/Weirdo-Fest/2026/" target="_blank" rel="noopener">More info →</a>
+          </div>
+        </li>
+        <li class="event">
+          <div class="when">27 Nov<br>2026</div>
+          <div>
+            <h3>Hike of the Parkeljni (Krampus)</h3>
+            <p class="where">Podkoren, Slovenia</p>
+            <p>A fire spectacle where horned, furry demons from three countries march through a village to scare people on purpose. Tickets are paid.</p>
+            <a href="https://kranjska-gora.si/en?p=9104" target="_blank" rel="noopener">More info →</a>
+          </div>
+        </li>
+        <li class="event">
+          <div class="when">27–30 Dec<br>2026</div>
+          <div>
+            <h3>40C3: Chaos Communication Congress</h3>
+            <p class="where">Hamburg Messe, Germany</p>
+            <p>Thousands of hackers spend the days between Christmas and New Year's in a convention center. Talks on security, hardware and the end of privacy, theme "Model Citizens".</p>
+            <a href="https://events.ccc.de/en/congress/" target="_blank" rel="noopener">More info →</a>
+          </div>
+        </li>
+        <li class="event">
+          <div class="when">3–9 Feb<br>2027</div>
+          <div>
+            <h3>Kurentovanje</h3>
+            <p class="where">Ptuj, Slovenia</p>
+            <p>Slovenia's biggest carnival: over a thousand Kurents (furry, bell-wearing monsters) chase winter away, and Shrove Tuesday ends with a funeral for "Pust". Not a joke, it's real tradition.</p>
+            <a href="https://kurentovanje.net/eng/" target="_blank" rel="noopener">More info →</a>
+          </div>
+        </li>
+      </ul>
+      <p class="fine">Dates checked on 24 Oct 2026. Double-check on the event sites before you travel anywhere.</p>
+    </div>
+  </section>
+</div>
+
+  <section class="tab" id="links">
     <h2>Links</h2>
     <div class="card">
       <a class="btn" href="/PORN">🏟️ PORN</a>
       <a class="btn" href="https://github.com/LGBTQplusplus" target="_blank" rel="noopener">🌈 GitHub org</a>
       <a class="btn" href="tel:0801808">📞 Company hotline: 080 1808</a>
       <a class="btn" href="https://www.fri.uni-lj.si" target="_blank" rel="noopener">🧠 Free memory</a>
-      <a class="btn" href="#wall">📜 Scream into the void</a>
+      <a class="btn" href="#events">🗓️ Events</a>
+      <a class="btn" href="#wall">📜 Printf</a>
     </div>
   </section>
 
-  <section id="wall">
+  <section class="tab" id="wall">
     <h2>📜 Printf</h2>
     <div class="card">
       <p>Leave a message for posterity (and for the cat). Max 512 characters. Sign it with whatever name you like.</p>
@@ -441,6 +535,35 @@
   });
 
   loadWall();
+
+  /* tabs: one section at a time (click handlers, URL hash kept in sync when the browser allows it) */
+  var TABS = ["home", "arena", "events", "wall", "links"];
+  var navLinks = document.querySelectorAll("#nav a");
+  function fromHash() {
+    var id = location.hash.slice(1);
+    return TABS.indexOf(id) < 0 ? "home" : id;
+  }
+  function showTab(id, scroll) {
+    TABS.forEach(function (t) { document.getElementById(t).hidden = (t !== id); });
+    Array.prototype.forEach.call(navLinks, function (a) {
+      var on = a.getAttribute("href") === "#" + id;
+      a.classList.toggle("on", on);
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (scroll) document.querySelector("main").scrollIntoView();
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+    var id = a.getAttribute("href").slice(1);
+    if (TABS.indexOf(id) < 0) return;
+    e.preventDefault();
+    try { history.pushState(null, "", "#" + id); } catch (err) {}
+    showTab(id, true);
+  });
+  window.addEventListener("hashchange", function () { showTab(fromHash(), true); });
+  window.addEventListener("popstate", function () { showTab(fromHash(), false); });
+  showTab(fromHash(), false);
 
   /* fake visitor counter */
   var c = document.getElementById("counter");
