@@ -127,17 +127,20 @@
   .tab[hidden] { display: none !important; }
   main { scroll-margin-top: 70px; }
 
-  /* events */
-  .events { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-  .event { display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: start;
-    background: rgba(0,0,0,.35); border-radius: 14px; padding: 12px 14px; }
-  .event .when { background: var(--yellow); color: #12001f; font-weight: bold; text-align: center;
+  /* lectures (shown as "Events") */
+  .day { margin: 18px 0 0; }
+  .day > h3 { display: inline-block; margin: 0 0 8px; padding: 2px 12px; background: var(--purple); border-radius: 8px; }
+  .day.today > h3 { background: var(--yellow); color: #12001f; }
+  .day.today > h3::after { content: " \00b7  today"; }
+  .lec { display: grid; grid-template-columns: 130px 1fr; gap: 14px; align-items: start;
+    background: rgba(0,0,0,.35); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; }
+  .lec .when { background: var(--yellow); color: #12001f; font-weight: bold; text-align: center;
     border: 3px solid #12001f; border-radius: 10px; padding: 6px 4px; box-shadow: 3px 3px 0 var(--pink);
-    transform: rotate(-2deg); font-size: .9rem; line-height: 1.25; }
-  .event h3 { margin: 0 0 2px; font-size: 1.15rem; }
-  .event .where { margin: 0 0 6px; font-size: .85rem; opacity: .8; }
-  .event p { margin: 0 0 6px; }
-  @media (max-width: 520px) { .event { grid-template-columns: 1fr; } .event .when { justify-self: start; padding: 6px 12px; } }
+    transform: rotate(-2deg); font-size: .9rem; line-height: 1.3; }
+  .lec h4 { margin: 0 0 2px; font-size: 1.15rem; }
+  .lec .real { margin: 0 0 6px; font-size: .8rem; opacity: .75; }
+  .lec p { margin: 0 0 6px; }
+  @media (max-width: 520px) { .lec { grid-template-columns: 1fr; } .lec .when { justify-self: start; padding: 6px 12px; } }
 
   /* post wall */
   #wall-form input[type="text"], #wall-form textarea {
@@ -253,6 +256,7 @@
         </tbody>
       </table>
       <p class="fine">* Totally real results. Mostly. (Placeholder data, the real leaderboard lives in the arena.)</p>
+      <a class="btn" href="/PORN">🏟️ PORN</a>
     </div>
   </section>
 
@@ -275,55 +279,101 @@
   <section>
     <h2>🗓️ Events</h2>
     <div class="card">
-      <p>Real events, zero relation to benchmarking. Pumpkins, demons and hackers, in order of when they happen.</p>
-      <ul class="events">
-        <li class="event">
-          <div class="when">until<br>1 Nov 2026</div>
+      <p>Winter semester 2026/27, 2nd year Računalništvo in informatika, lectures only. Times and rooms are real. The descriptions are not to be quoted to professors.</p>
+
+      <div class="day" data-day="1">
+        <h3>Monday</h3>
+        <div class="lec">
+          <div class="when">14:00–17:00<br>P04</div>
           <div>
-            <h3>Ludwigsburg Pumpkin Festival</h3>
-            <p class="where">Ludwigsburg, Germany</p>
-            <p>The world's largest pumpkin exhibition: around 450,000 pumpkins, 600 varieties, and this year's theme is "Let's Play". Yes, they take it very seriously.</p>
-            <a href="https://travel.ludwigsburg.de/start/events+_+festivals/ludwigsburg+pumpkin+festival.html" target="_blank" rel="noopener">More info →</a>
+            <h4>How To Monetize Your Side Project</h4>
+            <p class="real">Ekonomika in podjetništvo · 63248 · Tomaž Hovelja</p>
+            <p>Three hours on how companies make money. Useful if you'd like to be paid in more than exposure.</p>
           </div>
-        </li>
-        <li class="event">
-          <div class="when">21 Nov<br>2026</div>
+        </div>
+        <div class="lec">
+          <div class="when">17:00–18:00<br>P19</div>
           <div>
-            <h3>Weirdo Fest</h3>
-            <p class="where">Skatecafe, Amsterdam, Netherlands</p>
-            <p>A festival for people who love "weird" music and personalities, with a stacked lineup of eccentric acts and kooky art. 21+ only.</p>
-            <a href="https://www.festivalinfo.nl/festival/37007/Weirdo-Fest/2026/" target="_blank" rel="noopener">More info →</a>
+            <h4>Monday's Final Boss</h4>
+            <p class="real">Tehnične veščine · 63767B · Blaž Meden</p>
+            <p>One hour, straight after a three-hour block. Short on paper, long in practice.</p>
           </div>
-        </li>
-        <li class="event">
-          <div class="when">27 Nov<br>2026</div>
+        </div>
+      </div>
+
+      <div class="day" data-day="2">
+        <h3>Tuesday</h3>
+        <div class="lec">
+          <div class="when">08:00–11:00<br>P04</div>
           <div>
-            <h3>Hike of the Parkeljni (Krampus)</h3>
-            <p class="where">Podkoren, Slovenia</p>
-            <p>A fire spectacle where horned, furry demons from three countries march through a village to scare people on purpose. Tickets are paid.</p>
-            <a href="https://kranjska-gora.si/en?p=9104" target="_blank" rel="noopener">More info →</a>
+            <h4>The Robots Do The Work Now</h4>
+            <p class="real">Procesna avtomatika · 63737 · Octavian Mihai Machidon</p>
+            <p>Process automation, starting at 08:00 on a Tuesday. The first thing worth automating is getting out of bed.</p>
           </div>
-        </li>
-        <li class="event">
-          <div class="when">27–30 Dec<br>2026</div>
+        </div>
+        <div class="lec">
+          <div class="when">08:00–11:00<br>P01</div>
           <div>
-            <h3>40C3: Chaos Communication Congress</h3>
-            <p class="where">Hamburg Messe, Germany</p>
-            <p>Thousands of hackers spend the days between Christmas and New Year's in a convention center. Talks on security, hardware and the end of privacy, theme "Model Citizens".</p>
-            <a href="https://events.ccc.de/en/congress/" target="_blank" rel="noopener">More info →</a>
+            <h4>Tiny Computers, Huge Responsibilities</h4>
+            <p class="real">Vgrajeni sistemi · 63738 · Patricio Bulić</p>
+            <p>Embedded systems: computers that run a washing machine and are not allowed to crash. Same slot as the course above, so you pick one.</p>
           </div>
-        </li>
-        <li class="event">
-          <div class="when">3–9 Feb<br>2027</div>
+        </div>
+        <div class="lec">
+          <div class="when">14:00–17:00<br>P01</div>
           <div>
-            <h3>Kurentovanje</h3>
-            <p class="where">Ptuj, Slovenia</p>
-            <p>Slovenia's biggest carnival: over a thousand Kurents (furry, bell-wearing monsters) chase winter away, and Shrove Tuesday ends with a funeral for "Pust". Not a joke, it's real tradition.</p>
-            <a href="https://kurentovanje.net/eng/" target="_blank" rel="noopener">More info →</a>
+            <h4>Where Do The Bits Live?</h4>
+            <p class="real">Organizacija računalniških sistemov · 63218 · Patricio Bulić</p>
+            <p>How a computer is actually put together, and what happens between your code and the electricity.</p>
           </div>
-        </li>
-      </ul>
-      <p class="fine">Dates checked on 24 Oct 2026. Double-check on the event sites before you travel anywhere.</p>
+        </div>
+      </div>
+
+      <div class="day" data-day="3">
+        <h3>Wednesday</h3>
+        <div class="lec">
+          <div class="when">08:00–11:00<br>PA</div>
+          <div>
+            <h4>Some Problems Are Simply Cursed</h4>
+            <p class="real">Izračunljivost in računska zahtevnost · 63283 · Uroš Čibej</p>
+            <p>Which problems can be solved at all, and how long it takes when they can. It eventually explains why your program is slow.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="day" data-day="4">
+        <h3>Thursday</h3>
+        <div class="lec">
+          <div class="when">14:00–17:00<br>PA</div>
+          <div>
+            <h4>It Will Probably Be Fine</h4>
+            <p class="real">Verjetnost in statistika · 63213 · Aleksandar Jurišić</p>
+            <p>The course that puts a number on "probably". Thursday afternoon, three hours.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="day" data-day="5">
+        <h3>Friday</h3>
+        <div class="lec">
+          <div class="when">11:00–14:00<br>P01</div>
+          <div>
+            <h4>The Reason This Org Exists</h4>
+            <p class="real">Algoritmi in podatkovne strukture 1 · 63279 · Tomaž Hočevar</p>
+            <p>This is where O(n log n) stops being a joke and the <code>arena.sh</code> benchmarks begin.</p>
+          </div>
+        </div>
+        <div class="lec">
+          <div class="when">14:00–17:00<br>P01</div>
+          <div>
+            <h4>A Spreadsheet Is Not A Database</h4>
+            <p class="real">Osnove podatkovnih baz · 63208 · Marko Bajec</p>
+            <p>Tables, keys and queries, in the last block of the week. You're free at 17:00 on a Friday.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="fine">Source: <a href="https://urnik.fri.uni-lj.si/timetable/fri-2026_2027-zimski/allocations?type=P&amp;group=64537" target="_blank" rel="noopener">urnik.fri.uni-lj.si</a>, group 2_BUN-RI, type P (lectures). A static copy from 24 Oct 2026, so check the official timetable for changes.</p>
     </div>
   </section>
 </div>
@@ -335,8 +385,6 @@
       <a class="btn" href="https://github.com/LGBTQplusplus" target="_blank" rel="noopener">🌈 GitHub org</a>
       <a class="btn" href="tel:0801808">📞 Company hotline: 080 1808</a>
       <a class="btn" href="https://www.fri.uni-lj.si" target="_blank" rel="noopener">🧠 Free memory</a>
-      <a class="btn" href="#events">🗓️ Events</a>
-      <a class="btn" href="#wall">📜 Printf</a>
     </div>
   </section>
 
@@ -564,6 +612,10 @@
   window.addEventListener("hashchange", function () { showTab(fromHash(), true); });
   window.addEventListener("popstate", function () { showTab(fromHash(), false); });
   showTab(fromHash(), false);
+
+  /* highlight today's lectures */
+  var todayEl = document.querySelector('.day[data-day="' + new Date().getDay() + '"]');
+  if (todayEl) todayEl.classList.add("today");
 
   /* fake visitor counter */
   var c = document.getElementById("counter");
